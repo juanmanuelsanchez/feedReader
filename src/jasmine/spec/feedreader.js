@@ -143,20 +143,46 @@ $(function() {
     });
 
 
-
     /* TODO: Write a new test suite named "Initial Entries" */
 
-        /* TODO: Write a test that ensures when the loadFeed
-         * function is called and completes its work, there is at least
-         * a single .entry element within the .feed container.
-         * Remember, loadFeed() is asynchronous so this test wil require
-         * the use of Jasmine's beforeEach and asynchronous done() function.
-         */
+    /* TODO: Write a test that ensures when the loadFeed
+     * function is called and completes its work, there is at least
+     * a single .entry element within the .feed container.
+     * Remember, loadFeed() is asynchronous so this test wil require
+     * the use of Jasmine's beforeEach and asynchronous done() function.
+     */
+    describe('Initial Entries', function() {
+
+        var container= $('.feed');
+        var containerFirst=container[0];
+        var feedId=0;
+        var feedUrl=allFeeds[feedId].url;//?
+        var feed = new google.feeds.Feed(feedUrl);//?
+
+
+       beforeEach(function(done) {
+
+           loadFeed(feedId,function() {
+               done();
+           });
+       });
+
+        it('are ready', function(done) {
+            expect(containerFirst).not.toBeNull();
+            expect(container.length).toBeGreaterThan(0);
+            console.log(containerFirst.childNodes);
+            console.log(containerFirst.childNodes.length);
+
+            done();
+
+        });
+    });
 
     /* TODO: Write a new test suite named "New Feed Selection"
 
-        /* TODO: Write a test that ensures when a new feed is loaded
-         * by the loadFeed function that the content actually changes.
-         * Remember, loadFeed() is asynchronous.
-         */
+     /* TODO: Write a test that ensures when a new feed is loaded
+     * by the loadFeed function that the content actually changes.
+     * Remember, loadFeed() is asynchronous.
+     */
+
 }());
