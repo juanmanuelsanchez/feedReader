@@ -85,13 +85,64 @@ $(function() {
          * hidden by default. You'll have to analyze the HTML and
          * the CSS to determine how we're performing the
          * hiding/showing of the menu element.
+         *
+         * In this case describe blocks are nested with specs defined
+         * at different levels.
          */
 
-         /* TODO: Write a test that ensures the menu changes
-          * visibility when the menu icon is clicked. This test
-          * should have two expectations: does the menu display when
-          * clicked and does it hide when clicked again.
-          */
+    describe('The menu', function() {
+
+        it('is hidden by default ', function () {
+            expect($('body').hasClass('menu-hidden')).toBeTruthy();
+        });
+
+        /* TODO: Write a test that ensures the menu changes
+         * visibility when the menu icon is clicked. This test
+         * should have two expectations: does the menu display when
+         * clicked and does it hide when clicked again.
+         */
+
+        describe('The menu changes visibility', function () {
+
+            var menuIcon = $('.menu-icon-link');
+            var value = 0;
+
+            beforeEach(function (done) {
+
+                menuIcon.on('click', function () {
+
+                    done();
+                });
+
+            });
+
+
+            if (value == 0) {
+
+                it('displays when clicked', function (done) {
+
+                    expect($('body').hasClass('menu-hidden')).toBeFalsy();
+                    done();
+                });
+
+                value++;
+            }
+
+            if (value > 0) {
+
+                it('hides when clicked again', function (done) {
+                    expect($('body').hasClass('menu-hidden')).toBeTruthy();
+
+                    done();
+                    value = 0;
+
+                });
+            }
+
+        });
+    });
+
+
 
     /* TODO: Write a new test suite named "Initial Entries" */
 
