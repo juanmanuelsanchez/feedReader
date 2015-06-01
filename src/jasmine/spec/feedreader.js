@@ -100,6 +100,9 @@ $(function() {
          * visibility when the menu icon is clicked. This test
          * should have two expectations: does the menu display when
          * clicked and does it hide when clicked again.
+         * The .menu-icon-link must be clicked twice over a span of 2 seconds
+         * to check that the menu is hidden by default and that
+         * it changes when clicked.
          */
 
         describe('The menu changes visibility', function () {
@@ -188,6 +191,9 @@ $(function() {
      /* TODO: Write a test that ensures when a new feed is loaded
      * by the loadFeed function that the content actually changes.
      * Remember, loadFeed() is asynchronous.
+     * After clicking The .menu-icon-link, the .feed-list should be
+     * clicked twice to ensure that when a new feed is loaded
+     * the content changes.
      */
 
     describe('New Feed Selection', function() {
