@@ -156,8 +156,11 @@ $(function() {
         var container= $('.feed');
         var containerFirst=container[0];
         var feedId=0;
-        var feedUrl=allFeeds[feedId].url;//?
-        var feed = new google.feeds.Feed(feedUrl);//?
+        var feedUrl=allFeeds[feedId].url;
+        var feed = new google.feeds.Feed(feedUrl);
+
+
+
 
 
        beforeEach(function(done) {
@@ -172,6 +175,8 @@ $(function() {
             expect(container.length).toBeGreaterThan(0);
             console.log(containerFirst.childNodes);
             console.log(containerFirst.childNodes.length);
+            console.log(feed);
+            console.log(feedId);
 
             done();
 
@@ -184,5 +189,80 @@ $(function() {
      * by the loadFeed function that the content actually changes.
      * Remember, loadFeed() is asynchronous.
      */
+
+    describe('New Feed Selection', function() {
+
+        var feedList= $('.feed-list');
+        var count = 0;
+        var container= $('.feed');
+        var containerFirst=container[0];
+        var feedId=0;
+        var feedUrl;
+        var feed;
+        var feedName;
+        var id;
+
+
+
+        beforeEach(function (done) {
+
+            feedList.on('click','a', function () {
+
+                done();
+            });
+        });
+
+        if (count==0) {
+
+            it('displays default content', function (done) {
+
+
+                feedUrl=allFeeds[feedId].url;
+                feed = new google.feeds.Feed(feedUrl);
+
+                expect(containerFirst).not.toBeNull();
+                expect(container.length).toBeGreaterThan(0);
+                expect(feedId).toEqual(0);
+                console.log(feed);
+                console.log(feedUrl);
+                console.log(feedId);
+                done();
+
+                feedId++;
+            });
+
+            count++;
+
+        }
+
+        if (count>0) {
+
+            it('displays another content', function (done) {
+
+                feedUrl=allFeeds[feedId].url;
+                feed = new google.feeds.Feed(feedUrl);
+                feedName=allFeeds[feedId].name;
+                id=allFeeds[feedId].id;
+
+
+
+                expect(feedId).toBeGreaterThan(0);
+                expect(id).toBeGreaterThan(0);
+                expect(feedName).toMatch("CSS Tricks");
+
+                console.log(feed);
+                console.log(feedUrl);
+                console.log(feedId);
+                console.log(id);
+                console.log(feedName);
+                done();
+                count = 0;
+                feedId=0;
+
+
+            });
+        }
+
+    });
 
 }());
