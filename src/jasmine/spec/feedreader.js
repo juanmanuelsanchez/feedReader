@@ -16,19 +16,20 @@ $(function() {
     describe('RSS Feeds', function() {
         /* This is our first test - it tests to make sure that the
          * allFeeds variable has been defined and that it is not
-         * empty. Experiment with this before you get started on
-         * the rest of this project. What happens when you change
-         * allFeeds in app.js to be an empty array and refresh the
-         * page?
+         * empty. To help the test suite to DRY up any repeated
+         * setup we're using beforeEach and afterEach functions.
+         * In this case we're iterating through allFeeds JSON
+         * to help verifying that RSS Feeds "are defined" and
+         * RSS Feeds "url are defined".
          */
-        var feed=null;
-        var url=null;
-        var name=null;
-        var i=0;
+        var feed=null,
+            url=null,
+            name=null,
+            i=0;
 
         beforeEach(function() {
 
-            for(i; i<allFeeds.length; i++){
+            for(i; i<allFeeds.length; i++) {
 
                 feed=allFeeds[i];
                 url=feed.url;
@@ -57,6 +58,8 @@ $(function() {
         /* TODO: Write a test that loops through each feed
          * in the allFeeds object and ensures it has a URL defined
          * and that the URL is not empty.
+         * All the url provided in allFeeds JSON are defined and
+         * different from null.
          */
 
         it('url are defined', function() {
@@ -69,6 +72,8 @@ $(function() {
         /* TODO: Write a test that loops through each feed
          * in the allFeeds object and ensures it has a name defined
          * and that the name is not empty.
+         * All the names provided in allFeeds JSON are defined and
+         * different from null.
          */
 
         it('names are defined', function() {
@@ -100,17 +105,30 @@ $(function() {
          * visibility when the menu icon is clicked. This test
          * should have two expectations: does the menu display when
          * clicked and does it hide when clicked again.
-         * The .menu-icon-link must be clicked twice over a span of 2 seconds
-         * to check that the menu is hidden by default and that
-         * it changes when clicked.
+         *
+         * The .menu-icon-link must be clicked twice over a
+         * recommended span of 2-3 seconds to check that the menu is
+         * hidden by default and that it displays when clicked.
+         * The first click will display the menu and the second
+         * will hide it.
+         * As we're testing an eventual click event of the user,
+         * testing asynchronous operations is required.
+         * By default jasmine will wait for 5 seconds for an
+         * asynchronous spec to finish before causing a timeout
+         * failure.
+         * The variable "value" is set to 0 by default and it
+         * allows us to test the absence of 'menu-hidden' class on
+         * the 'body' element and, as the variable "value" changes
+         * its value to 1, we'll test the presence of 'menu-hidden' class
+         * on the second click.
          */
 
-        describe('The menu changes visibility', function () {
+        describe('The menu changes visibility', function() {
 
-            var menuIcon = $('.menu-icon-link');
-            var value = 0;
+            var menuIcon = $('.menu-icon-link'),
+                value = 0;
 
-            beforeEach(function (done) {
+            beforeEach(function(done) {
 
                 menuIcon.on('click', function () {
 
@@ -122,7 +140,7 @@ $(function() {
 
             if (value == 0) {
 
-                it('displays when clicked', function (done) {
+                it('displays when clicked', function(done) {
 
                     expect($('body').hasClass('menu-hidden')).toBeFalsy();
                     done();
@@ -133,7 +151,7 @@ $(function() {
 
             if (value > 0) {
 
-                it('hides when clicked again', function (done) {
+                it('hides when clicked again', function(done) {
                     expect($('body').hasClass('menu-hidden')).toBeTruthy();
 
                     done();
@@ -148,34 +166,40 @@ $(function() {
 
     /* TODO: Write a new test suite named "Initial Entries" */
 
-    /* TODO: Write a test that ensures when the loadFeed
-     * function is called and completes its work, there is at least
-     * a single .entry element within the .feed container.
-     * Remember, loadFeed() is asynchronous so this test wil require
-     * the use of Jasmine's beforeEach and asynchronous done() function.
-     */
+
+       /* TODO: Write a test that ensures when the loadFeed
+        * function is called and completes its work, there is at least
+        * a single .entry element within the .feed container.
+        * Remember, loadFeed() is asynchronous so this test wil require
+        * the use of Jasmine's beforeEach and asynchronous done() function.
+        *
+        * In this test suite we're checking, with the help of asynchronous
+        * testing operations, that the .feed container is not
+        * empty through a reference to its childNodes. They're defined and
+        * their length property is greater than 0.
+        */
+
     describe('Initial Entries', function() {
 
-        var container= $('.feed');
-        var containerFirst=container[0];
-        var feedId=0;
-        var feedUrl=allFeeds[feedId].url;
-        var feed = new google.feeds.Feed(feedUrl);
+        var container= $('.feed'),
+            containerFirst=container[0],
+            feedId= 0,
+            feedUrl=allFeeds[feedId].url,
+            feed = new google.feeds.Feed(feedUrl);
 
 
+        beforeEach(function(done) {
 
-
-
-       beforeEach(function(done) {
-
-           loadFeed(feedId,function() {
-               done();
-           });
-       });
+            loadFeed(feedId,function() {
+                done();
+            });
+        });
 
         it('are ready', function(done) {
+            expect(containerFirst).toBeDefined();
             expect(containerFirst).not.toBeNull();
             expect(container.length).toBeGreaterThan(0);
+            expect(containerFirst.childNodes.length).toBeGreaterThan(0);
             console.log(containerFirst.childNodes);
             console.log(containerFirst.childNodes.length);
             console.log(feed);
@@ -188,25 +212,30 @@ $(function() {
 
     /* TODO: Write a new test suite named "New Feed Selection"
 
-     /* TODO: Write a test that ensures when a new feed is loaded
-     * by the loadFeed function that the content actually changes.
-     * Remember, loadFeed() is asynchronous.
-     * After clicking The .menu-icon-link, the .feed-list should be
-     * clicked twice to ensure that when a new feed is loaded
-     * the content changes.
-     */
+       /* TODO: Write a test that ensures when a new feed is loaded
+        * by the loadFeed function that the content actually changes.
+        * Remember, loadFeed() is asynchronous.
+        *
+        * After clicking The .menu-icon-link, the .feed-list items should be
+        * clicked twice: first, necessarily 'CSS tricks' link should be
+        * clicked to ensure not only that when a new feed is loaded
+        * the content changes, but that it matches the 'name' property
+        * of the selected item ('CSS tricks') as defined in allFeeds JSON.
+        * This test is performed with the help of asynchronous testing
+        * operations.
+        */
 
     describe('New Feed Selection', function() {
 
-        var feedList= $('.feed-list');
-        var count = 0;
-        var container= $('.feed');
-        var containerFirst=container[0];
-        var feedId=0;
-        var feedUrl;
-        var feed;
-        var feedName;
-        var id;
+        var feedList= $('.feed-list'),
+            count = 0,
+            container= $('.feed'),
+            containerFirst=container[0],
+            feedId=0,
+            feedUrl,
+            feed,
+            feedName,
+            id;
 
 
 
@@ -225,13 +254,16 @@ $(function() {
 
                 feedUrl=allFeeds[feedId].url;
                 feed = new google.feeds.Feed(feedUrl);
+                feedName=allFeeds[feedId].name;
 
                 expect(containerFirst).not.toBeNull();
                 expect(container.length).toBeGreaterThan(0);
                 expect(feedId).toEqual(0);
+                expect(feedName).toMatch('Udacity Blog');
                 console.log(feed);
                 console.log(feedUrl);
                 console.log(feedId);
+                console.log(feedName);
                 done();
 
                 feedId++;
@@ -243,7 +275,7 @@ $(function() {
 
         if (count>0) {
 
-            it('displays another content', function (done) {
+            it('displays another content', function(done) {
 
                 feedUrl=allFeeds[feedId].url;
                 feed = new google.feeds.Feed(feedUrl);
@@ -254,7 +286,7 @@ $(function() {
 
                 expect(feedId).toBeGreaterThan(0);
                 expect(id).toBeGreaterThan(0);
-                expect(feedName).toMatch("CSS Tricks");
+                expect(feedName).toMatch('CSS Tricks');
 
                 console.log(feed);
                 console.log(feedUrl);
