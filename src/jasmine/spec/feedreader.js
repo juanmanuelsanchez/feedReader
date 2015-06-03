@@ -228,6 +228,9 @@ $(function() {
         * of the selected item ('CSS tricks') as defined in allFeeds JSON.
         * This test is performed with the help of asynchronous testing
         * operations.
+        *
+        * In this case describe blocks are nested with specs defined
+        * at different levels.
         */
 
     describe('Initial entries', function() {
