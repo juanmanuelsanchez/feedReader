@@ -216,16 +216,21 @@ $(function() {
         * by the loadFeed function that the content actually changes.
         * Remember, loadFeed() is asynchronous.
         *
-        * After clicking The .menu-icon-link, the .feed-list items should be
-        * clicked twice: first, necessarily 'CSS tricks' link should be
-        * clicked to ensure not only that when a new feed is loaded
-        * the content changes, but that it matches the 'name' property
+        * When the loadFeed function is called and completes its work we're
+        * ensuring that the default content from the JSON ('Udacity Blog')
+        * is displayed.
+        * After clicking the .menu-icon-link twice to ensure that the menu
+        * changes its visibility(test suite called "The menu"), whe should click
+        * it once more in order to select a .feed-list item that must
+        * be clicked once: 'CSS tricks'. This link should be
+        * clicked to ensure that when a new feed is loaded
+        * the content changes and matches the 'name' property
         * of the selected item ('CSS tricks') as defined in allFeeds JSON.
         * This test is performed with the help of asynchronous testing
         * operations.
         */
 
-    describe('New Feed Selection', function() {
+    describe('Initial entries', function() {
 
         var feedList= $('.feed-list'),
             count = 0,
@@ -237,19 +242,17 @@ $(function() {
             feedName,
             id;
 
+        beforeEach(function(done) {
 
-
-        beforeEach(function (done) {
-
-            feedList.on('click','a', function () {
-
+            loadFeed(feedId,function() {
                 done();
             });
         });
 
+
         if (count==0) {
 
-            it('displays default content', function (done) {
+            it('display default content', function (done) {
 
 
                 feedUrl=allFeeds[feedId].url;
@@ -264,6 +267,7 @@ $(function() {
                 console.log(feedUrl);
                 console.log(feedId);
                 console.log(feedName);
+                console.log("Default content!");
                 done();
 
                 feedId++;
@@ -273,33 +277,43 @@ $(function() {
 
         }
 
-        if (count>0) {
+        describe('New feed selection', function() {
 
-            it('displays another content', function(done) {
+            beforeEach(function (done) {
 
-                feedUrl=allFeeds[feedId].url;
-                feed = new google.feeds.Feed(feedUrl);
-                feedName=allFeeds[feedId].name;
-                id=allFeeds[feedId].id;
+                feedList.on('click', 'a', function () {
 
-
-
-                expect(feedId).toBeGreaterThan(0);
-                expect(id).toBeGreaterThan(0);
-                expect(feedName).toMatch('CSS Tricks');
-
-                console.log(feed);
-                console.log(feedUrl);
-                console.log(feedId);
-                console.log(id);
-                console.log(feedName);
-                done();
-                count = 0;
-                feedId=0;
-
-
+                    done();
+                });
             });
-        }
+
+            if (count > 0) {
+
+                it('displays another content', function (done) {
+
+                    feedUrl = allFeeds[feedId].url;
+                    feed = new google.feeds.Feed(feedUrl);
+                    feedName = allFeeds[feedId].name;
+                    id = allFeeds[feedId].id;
+
+
+                    expect(feedId).toBeGreaterThan(0);
+                    expect(id).toBeGreaterThan(0);
+                    expect(feedName).toMatch('CSS Tricks');
+
+                    console.log(feed);
+                    console.log(feedUrl);
+                    console.log(feedId);
+                    console.log(id);
+                    console.log(feedName);
+                    console.log("Another content!");
+                    done();
+                    count = 0;
+                    feedId = 0;
+
+                });
+            }
+        });
 
     });
 
