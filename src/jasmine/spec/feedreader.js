@@ -16,8 +16,7 @@ $(function() {
   describe('RSS Feeds', function() {
     /* This is our first test - it tests to make sure that the
      * allFeeds variable has been defined and that it is not
-     * empty. To help the test suite to DRY up any repeated
-     * setup we're using beforeEach and afterEach functions.
+     * empty.
      * In this case we're iterating through allFeeds JSON
      * to help verifying that RSS Feeds "are defined" and
      * RSS Feeds "url are defined".
@@ -28,6 +27,10 @@ $(function() {
         i=0;
 
 
+    /* To help the test suite to DRY up any repeated
+     * setup we're using afterEach functions
+     *
+     */
     afterEach(function() {
 
       feed=null;
@@ -110,6 +113,7 @@ $(function() {
 
       expect($('body').hasClass('menu-hidden')).toBeTruthy();
 
+
     });
 
 
@@ -124,6 +128,7 @@ $(function() {
         $(menuIcon).trigger( "click" );
         console.log("Click and displays!");
         expect($('body').hasClass('menu-hidden')).toBeFalsy();
+
       });
 
       it('hides when clicked again', function () {
@@ -131,6 +136,7 @@ $(function() {
         $(menuIcon).trigger( "click" );
         console.log("Click and hides!");
         expect($('body').hasClass('menu-hidden')).toBeTruthy();
+
       });
 
     });
@@ -145,8 +151,9 @@ $(function() {
 
     var firstFeedName,
         secondFeedName,
+        defaultFeedName,
         firstFeedId=0;
-    secondFeedId=1,
+        secondFeedId=1,
         firstFeedTitle=null,
         secondFeedTitle=null;
 
@@ -166,6 +173,15 @@ $(function() {
       });
     });
 
+    afterAll(function(callback){
+
+      loadFeed(firstFeedId, function() {
+
+        callback();
+
+      });
+    });
+
 
     it('produces new content', function (done) {
 
@@ -178,6 +194,15 @@ $(function() {
 
       done();
 
+    });
+
+    it('restores the loadFeed to the default', function (callback) {
+
+      defaultFeedName= allFeeds[firstFeedId].name;
+      expect(defaultFeedName).toMatch('Udacity Blog');
+      console.log(defaultFeedName);
+
+      callback();
     });
 
   });
