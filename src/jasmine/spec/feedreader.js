@@ -150,7 +150,7 @@ $(function() {
         var firstFeedName,
             secondFeedName,
             defaultFeedName,
-            firstFeedId=0;
+            firstFeedId=0,
             secondFeedId=1,
             firstFeedTitle=null,
             secondFeedTitle=null;
@@ -164,8 +164,11 @@ $(function() {
 
             loadFeed(firstFeedId,function() {
 
-                loadFeed(secondFeedId, function() {
+                //Stores the header-title of the first feed
+                firstFeedTitle=$('.header-title').text();
 
+                loadFeed(secondFeedId, function() {
+                    //Stores the value of the name property of the second feed
                     secondFeedName=allFeeds[secondFeedId].name;
 
                     done();
@@ -190,12 +193,16 @@ $(function() {
        */
         it('produces new content', function (done) {
 
+            //Stores the header-title of the second feed
+            secondFeedTitle=$('.header-title').text();
+            //Stores the name property of the first feed
             firstFeedName=allFeeds[firstFeedId].name;
+
+            //Checks the differences
             expect(firstFeedName).toMatch('Udacity Blog');
             expect(secondFeedName).toMatch('CSS Tricks');
-            console.log(firstFeedName);
-            console.log(secondFeedName);
             expect(firstFeedName).not.toEqual(secondFeedName);
+            expect(firstFeedTitle).not.toEqual(secondFeedTitle);
 
             done();
 
@@ -209,7 +216,6 @@ $(function() {
 
             defaultFeedName= allFeeds[firstFeedId].name;
             expect(defaultFeedName).toMatch('Udacity Blog');
-            console.log(defaultFeedName);
 
             callback();
         });
