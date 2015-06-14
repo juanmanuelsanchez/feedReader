@@ -1,7 +1,7 @@
 /* feedreader.js
  *
  * This is the spec file that Jasmine will read and contains
- * all of the tests that will be run against your application.
+ * all of the tests that will be run against the application.
  */
 
 /* We're placing all of our tests within the $() function,
@@ -46,7 +46,6 @@ $(function() {
        /* Checks allFeeds JSON the url property provided
         * in allFeeds JSON are defined and different from null.
         * We're iterating through allFeeds JSON with a for loop.
-        *
         */
         it('and allFeeds-url are defined', function() {
 
@@ -85,7 +84,7 @@ $(function() {
 
 
 
-   /* This is our second test suite and tests the interactive
+   /* This is the second test suite and tests the interactive
     * nature of the menu.
     */
     describe('The menu', function() {
@@ -110,10 +109,10 @@ $(function() {
             //Holds the menu-icon-link of the DOM
             var menuIcon = $('.menu-icon-link');
 
-           /* Evaluates to  false the presence of 'menu-hidden' class
-            * in the body when clicking the menu-icon-link through
-            * JQuery .trigger() method.
-            */
+            /* Evaluates to  false the presence of 'menu-hidden' class
+             * in the body when clicking the menu-icon-link through
+             * JQuery .trigger() method.
+             */
             it('displays when clicked', function () {
 
                 //performs a click event
@@ -122,17 +121,17 @@ $(function() {
 
             });
 
-          /* Evaluates to true the presence of 'menu-hidden' class in
-           * the body when clicking again the menu-icon-link through
-           * JQuery .trigger() method.
-           */
-           it('hides when clicked again', function () {
+            /* Evaluates to true the presence of 'menu-hidden' class in
+             * the body when clicking again the menu-icon-link through
+             * JQuery .trigger() method.
+             */
+            it('hides when clicked again', function () {
 
-               //performs a click event
-               $(menuIcon).trigger( "click" );
-               expect($('body').hasClass('menu-hidden')).toBeTruthy();
+                //performs a click event
+                $(menuIcon).trigger( "click" );
+                expect($('body').hasClass('menu-hidden')).toBeTruthy();
 
-           });
+            });
 
         });
 
@@ -140,10 +139,14 @@ $(function() {
 
 
 
-
+  /* This is the second test suite and ensures when a new feed is loaded
+   * by the loadFeed function that the content actually changes.
+   */
     describe('New feed selection', function() {
 
-
+      /* Declares the variables that are going to be used
+       * throughout the test.
+       */
         var firstFeedName,
             secondFeedName,
             defaultFeedName,
@@ -153,7 +156,10 @@ $(function() {
             secondFeedTitle=null;
 
 
-
+       /* Jasmine beforeEach method loads the feed with an initial
+        * ID and passes a callback function to load another feed with
+        * different ID.
+        */
         beforeEach(function(done) {
 
             loadFeed(firstFeedId,function() {
@@ -168,6 +174,8 @@ $(function() {
             });
         });
 
+       /* afterAll method restores loadFeed function to the default.
+        */
         afterAll(function(callback){
 
            loadFeed(firstFeedId, function() {
@@ -177,7 +185,9 @@ $(function() {
            });
         });
 
-
+      /* This test checks that the values of the first feed and the
+       * second feed are not equal.
+       */
         it('produces new content', function (done) {
 
             firstFeedName=allFeeds[firstFeedId].name;
@@ -190,6 +200,10 @@ $(function() {
             done();
 
         });
+
+      /* This test checks that the values of the loadFeed function are
+       * restored to the default.
+       */
 
         it('restores the loadFeed to the default', function (callback) {
 
