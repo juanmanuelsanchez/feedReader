@@ -90,12 +90,17 @@ $(function() {
     describe('The menu', function() {
 
        /* Checks that menu is hidden by default with JQuery .hasClass()
-        * method. The 'menu-hidden' class evaluates to true on the body
+        * .parent() methods. The 'menu-hidden' class evaluates to true on the body
         * by default.
         */
+
+        //Holds the menu
+        var menu=$('.menu.hidden');
+
         it('is hidden by default ', function () {
 
            expect($('body').hasClass('menu-hidden')).toBeTruthy();
+           expect($(menu).parent().hasClass('menu-hidden')).toBeTruthy();
 
         });
 
@@ -105,6 +110,9 @@ $(function() {
         */
 
         describe('displays and hides when clicked', function() {
+
+            //Holds the menu
+            var menu=$('.menu.hidden');
 
             //Holds the menu-icon-link of the DOM
             var menuIcon = $('.menu-icon-link');
@@ -118,6 +126,7 @@ $(function() {
                 //performs a click event
                 $(menuIcon).trigger( "click" );
                 expect($('body').hasClass('menu-hidden')).toBeFalsy();
+                expect($(menu).parent().hasClass('menu-hidden')).toBeFalsy();
 
             });
 
@@ -130,6 +139,7 @@ $(function() {
                 //performs a click event
                 $(menuIcon).trigger( "click" );
                 expect($('body').hasClass('menu-hidden')).toBeTruthy();
+                expect($(menu).parent().hasClass('menu-hidden')).toBeTruthy();
 
             });
 
