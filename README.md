@@ -4,17 +4,17 @@
   ------------------------
 Creates a feed reader application with articles taken from Udacity Blog, CSS Tricks,
 HTML5 Rocks and Linear Digressions. Firstly it'll show a list view of articles taken 
-Udacity Blog by default. At the top left corner there's a menu-icon-link to display 
+from Udacity Blog by default. At the top left corner there's a menu-icon-link which displays 
 a menu with other feed suggestions from other sites. These suggestions are 
 clickable and, when clicked, the app will show additional articles taken from those sites.
-The program is implemented with Test Driven development pattern, so when the user is running the
+The program is implemented with Test Driven Development pattern, so when the user is running the
 application there's a group of test suites that are running at the same time. 
 In order to run the application, follow the instructions detailed on the second paragraph.
 
 ## 2.-Instructions to run the program
   ------------------------------------
 1) Click the `index.html` file to run the application.
-2) Click on one of the feed suggestions listed to read the related article.
+2) Click on one of the suggestions listed to read the related article.
 3) Click on the top left corner's menu-icon-link to display the feed list view menu,
    and choose another one to read if you wish. 
    
