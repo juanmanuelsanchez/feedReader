@@ -10,12 +10,12 @@
  */
 $(function() {
 
-    /* This is our first test - it tests to make sure that the
+    /* This is our first test to make sure that the
      * allFeeds variable has been defined and that it is not
      * empty.
      * In this case we're going to iterate through allFeeds JSON
      * to help verifying that RSS Feeds "are defined" and
-     * RSS Feeds "url are defined".
+     * RSS Feeds "url are defined" and different from null.
      */
 
      describe('RSS Feeds', function() {
@@ -43,8 +43,8 @@ $(function() {
 
         });
 
-       /* Checks allFeeds JSON the url property provided
-        * in allFeeds JSON are defined and different from null.
+       /* Checks that the url property provided
+        * in allFeeds JSON is defined in all cases and different from null.
         * We're iterating through allFeeds JSON with a for loop.
         */
         it('and allFeeds-url are defined', function() {
@@ -63,7 +63,7 @@ $(function() {
         });
 
        /* Checks that the name property provided in allFeeds
-        * JSON is defined and different from null.
+        * JSON is defined in all cases and different from null.
         * We're iterating through allFeeds JSON with a for loop.
         */
         it('and allFeeds-name are defined', function() {
@@ -84,9 +84,9 @@ $(function() {
 
 
 
-   /* This is the second test suite and tests the interactive
-    * nature of the menu.
-    */
+    /* This is the second test suite and tests the interactive
+     * nature of the menu.
+     */
     describe('The menu', function() {
 
        /* Checks that menu is hidden by default with JQuery .hasClass()
@@ -147,9 +147,44 @@ $(function() {
 
     });
 
+  /* This is the third test suite that ensures when the loadFeed function is
+   * called and completes its work, there is at least a single .entry element
+   * within the .feed container.
+   */
+   describe('Initial entries', function() {
+
+       /* Declares the variables we're using to
+        * load a feed, hold a reference to the
+        * .feed container and to the .entry class
+        */
+       var feedId= 0,
+           container = $('.feed'),
+           entry;
+
+       //Loads a feed passing an ID
+       beforeEach(function(done) {
+
+          loadFeed(feedId,done);
+
+       });
+
+     /* This test checks that when the loadFeed function is
+      * called and completes its work, .feed container has
+      * content. We're using JQuery content(), :has(),
+      * and .find() methods to traversing the DOM.
+      */
+       it('has at least a single entry', function(done) {
+           entry=$(container).contents().find('.entry');
+           expect(entry.length).toBeGreaterThan(0);
+           expect(container.contents().find('.entry')).toBeTruthy();
+           expect($(".feed:has('.entry-link')")).toBeTruthy();
+
+           done();
+       });
+   });
 
 
-  /* This is the second test suite and ensures when a new feed is loaded
+  /* This is the fourth test suite and ensures when a new feed is loaded
    * by the loadFeed function that the content actually changes.
    */
     describe('New feed selection', function() {
