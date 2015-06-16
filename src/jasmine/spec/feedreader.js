@@ -89,7 +89,7 @@ $(function() {
      */
     describe('The menu', function() {
 
-       /* Checks that menu is hidden by default with JQuery .hasClass()
+       /* Checks that menu is hidden by default with JQuery .hasClass() and
         * .parent() methods. The 'menu-hidden' class evaluates to true on the body
         * by default.
         */
@@ -105,8 +105,8 @@ $(function() {
         });
 
        /* Checks that menu displays when clicking .menu-icon-link
-        * with JQuery .trigger() to perform a click event, and
-        * .hasClass() methods.
+        * with JQuery .trigger() to perform a click event, and evaluates
+        * to true or false through JQuery .hasClass() method.
         */
 
         describe('displays and hides when clicked', function() {
@@ -123,7 +123,7 @@ $(function() {
              */
             it('displays when clicked', function () {
 
-                //performs a click event
+                //performs a click event with JQuery .trigger() method
                 $(menuIcon).trigger( "click" );
                 expect($('body').hasClass('menu-hidden')).toBeFalsy();
                 expect($(menu).parent().hasClass('menu-hidden')).toBeFalsy();
@@ -147,14 +147,14 @@ $(function() {
 
     });
 
-  /* This is the third test suite that ensures when the loadFeed function is
-   * called and completes its work, there is at least a single .entry element
-   * within the .feed container.
+  /* This is the third test suite that ensures that when the loadFeed
+   * function is called and completes its work, there's at least a
+   * single .entry element within the .feed container.
    */
    describe('Initial entries', function() {
 
        /* Declares the variables we're using to
-        * load a feed, hold a reference to the
+        * load a feed, holds a reference to the
         * .feed container and to the .entry class
         */
        var feedId= 0,
@@ -173,7 +173,7 @@ $(function() {
       * content. We're using JQuery content(), :has(),
       * and .find() methods to traversing the DOM.
       */
-       it('has at least a single entry', function(done) {
+       it('have at least a single entry', function(done) {
            entry=$(container).contents().find('.entry');
            expect(entry.length).toBeGreaterThan(0);
            expect(container.contents().find('.entry')).toBeTruthy();
