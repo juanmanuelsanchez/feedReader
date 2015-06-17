@@ -10,24 +10,24 @@
  */
 $(function() {
 
-     /* This is our first test to make sure that the
-      * allFeeds variable has been defined and that it is not
-      * empty.
-      * In this case we're going to iterate through allFeeds JSON
-      * to help verifying that RSS Feeds "are defined" and
-      * RSS Feeds "url are defined" and different from null.
-      */
+    /* This is our first test to make sure that the
+     * allFeeds variable has been defined and that it is not
+     * empty.
+     * In this case we're going to iterate through allFeeds JSON
+     * to help verifying that RSS Feeds "are defined" and
+     * RSS Feeds "url are defined" and different from null.
+     */
 
-     describe('RSS Feeds', function() {
+    describe('RSS Feeds', function() {
 
 
-         /* Declares the variables we're using to iterate
-          * through allFeeds JSON.
-          */
-         var feed,
-             url,
-             name,
-             i = 0;
+        /* Declares the variables we're using to iterate
+         * through allFeeds JSON.
+         */
+        var feed,
+            url,
+            name,
+            i = 0;
 
 
         /* To help the test suite to DRY up any repeated
@@ -80,7 +80,7 @@ $(function() {
 
         });
 
-     });
+    });
 
 
 
