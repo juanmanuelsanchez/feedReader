@@ -10,48 +10,48 @@
  */
 $(function() {
 
-    /* This is our first test to make sure that the
-     * allFeeds variable has been defined and that it is not
-     * empty.
-     * In this case we're going to iterate through allFeeds JSON
-     * to help verifying that RSS Feeds "are defined" and
-     * RSS Feeds "url are defined" and different from null.
-     */
+     /* This is our first test to make sure that the
+      * allFeeds variable has been defined and that it is not
+      * empty.
+      * In this case we're going to iterate through allFeeds JSON
+      * to help verifying that RSS Feeds "are defined" and
+      * RSS Feeds "url are defined" and different from null.
+      */
 
      describe('RSS Feeds', function() {
 
 
-        /* Declares the variables we're using to iterate
-         * through allFeeds JSON.
-         */
+         /* Declares the variables we're using to iterate
+          * through allFeeds JSON.
+          */
          var feed,
              url,
              name,
-             i=0;
+             i = 0;
 
 
-       /* To help the test suite to DRY up any repeated
-        * setup we're using afterEach function.
-        * Restores the variables to their original state.
-        */
+        /* To help the test suite to DRY up any repeated
+         * setup we're using afterEach function.
+         * Restores the variables to their original state.
+         */
         afterEach(function() {
 
             feed,
             url,
             name,
-            i=0;
+            i = 0;
 
         });
 
-       /* Checks that the url property provided
-        * in allFeeds JSON is defined in all cases and different from null.
-        * We're iterating through allFeeds JSON with a for loop.
-        */
+        /* Checks that the url property provided
+         * in allFeeds JSON is defined in all cases and different from null.
+         * We're iterating through allFeeds JSON with a for loop.
+         */
         it('and allFeeds-url are defined', function() {
 
-            for(i; i<allFeeds.length; i++) {
-                feed=allFeeds[i];
-                url=feed.url;
+            for (i; i < allFeeds.length; i++) {
+                feed = allFeeds[i];
+                url = feed.url;
 
                 expect(feed).toBeDefined();
                 expect(allFeeds.length).not.toBe(0);
@@ -62,16 +62,16 @@ $(function() {
 
         });
 
-       /* Checks that the name property provided in allFeeds
-        * JSON is defined in all cases and different from null.
-        * We're iterating through allFeeds JSON with a for loop.
-        */
+        /* Checks that the name property provided in allFeeds
+         * JSON is defined in all cases and different from null.
+         * We're iterating through allFeeds JSON with a for loop.
+         */
         it('and allFeeds-name are defined', function() {
 
-            for(i; i<allFeeds.length; i++) {
+            for (i; i < allFeeds.length; i++ ) {
 
-                feed=allFeeds[i];
-                name=feed.name;
+                feed = allFeeds[i];
+                name = feed.name;
 
                 expect(name).toBeDefined();
                 expect(name).not.toBeNull();
@@ -80,7 +80,7 @@ $(function() {
 
         });
 
-  });
+     });
 
 
 
@@ -89,13 +89,13 @@ $(function() {
      */
     describe('The menu', function() {
 
-       /* Checks that menu is hidden by default with JQuery .hasClass() and
-        * .parent() methods. The 'menu-hidden' class evaluates to true on the body
-        * by default.
-        */
+        /* Checks that menu is hidden by default with JQuery .hasClass() and
+         * .parent() methods. The 'menu-hidden' class evaluates to true on the body
+         * by default.
+         */
 
         //Holds the menu
-        var menu=$('.menu.hidden');
+        var menu = $('.menu.hidden');
 
         it('is hidden by default ', function () {
 
@@ -104,15 +104,15 @@ $(function() {
 
         });
 
-       /* Checks that menu displays when clicking .menu-icon-link
-        * with JQuery .trigger() to perform a click event, and evaluates
-        * to true or false through JQuery .hasClass() method.
-        */
+        /* Checks that menu displays when clicking .menu-icon-link
+         * with JQuery .trigger() to perform a click event, and evaluates
+         * to true or false through JQuery .hasClass() method.
+         */
 
         describe('displays and hides when clicked', function() {
 
             //Holds the menu
-            var menu=$('.menu.hidden');
+            var menu = $('.menu.hidden');
 
             //Holds the menu-icon-link of the DOM
             var menuIcon = $('.menu-icon-link');
@@ -147,74 +147,73 @@ $(function() {
 
     });
 
-  /* This is the third test suite that ensures that when the loadFeed
-   * function is called and completes its work, there's at least a
-   * single .entry element within the .feed container.
-   */
-   describe('Initial entries', function() {
+    /* This is the third test suite that ensures that when the loadFeed
+     * function is called and completes its work, there's at least a
+     * single .entry element within the .feed container.
+     */
+    describe('Initial entries', function() {
 
-       /* Declares the variables we're using to
-        * load a feed, holds a reference to the
-        * .feed container and to the .entry class
-        */
-       var feedId= 0,
-           container = $('.feed'),
-           entry;
-
-       //Loads a feed passing an ID
-       beforeEach(function(done) {
-
-          loadFeed(feedId,done);
-
-       });
-
-     /* This test checks that when the loadFeed function is
-      * called and completes its work, .feed container has
-      * content. We're using JQuery content(), :has(),
-      * and .find() methods to traversing the DOM.
-      */
-       it('have at least a single entry', function(done) {
-           entry=$(container).contents().find('.entry');
-           expect(entry.length).toBeGreaterThan(0);
-           expect(container.contents().find('.entry')).toBeTruthy();
-           expect($(".feed:has('.entry-link')")).toBeTruthy();
-
-           done();
-       });
-   });
+        /* Declares the variables we're using to
+         * load a feed, holds a reference to the
+         * .feed container and to the .entry class
+         */
+        var feedId = 0,
+            container = $('.feed');
 
 
-  /* This is the fourth test suite and ensures when a new feed is loaded
-   * by the loadFeed function that the content actually changes.
-   */
+        //Loads a feed passing an ID
+        beforeEach(function(done) {
+
+           loadFeed(feedId,done);
+
+        });
+
+        /* This test checks that when the loadFeed function is
+         * called and completes its work, .feed container has
+         * content. We're using JQuery content() and .find()
+         * methods to traversing the DOM.
+         */
+        it('have at least a single entry', function(done) {
+            expect(container.contents().find('.entry')).toBeTruthy();
+            expect($(".feed:has('.entry-link')")).toBeTruthy();
+            expect($('.feed .entry')).toBeTruthy();
+
+            done();
+        });
+    });
+
+
+    /* This is the fourth test suite and ensures when a new feed is loaded
+     * by the loadFeed function that the content actually changes.
+     */
     describe('New feed selection', function() {
 
-      /* Declares the variables that are going to be used
-       * throughout the test.
-       */
+        /* Declares the variables that are going to be used
+         * throughout the test.
+         */
         var firstFeedName,
             secondFeedName,
             defaultFeedName,
-            firstFeedId=0,
-            secondFeedId=1,
-            firstFeedTitle=null,
-            secondFeedTitle=null;
+            firstFeedId = 0,
+            secondFeedId = 1,
+            firstFeedTitle = null,
+            secondFeedTitle = null;
 
 
-       /* Jasmine beforeEach method loads the feed with an initial
-        * ID and passes a callback function to load another feed with
-        * different ID.
-        */
+        /* Jasmine beforeEach method loads the feed with an initial
+         * ID and passes a callback function to load another feed with
+         * different ID.
+         */
         beforeEach(function(done) {
 
             loadFeed(firstFeedId,function() {
 
                 //Stores the header-title of the first feed
-                firstFeedTitle=$('.header-title').text();
+                firstFeedTitle = $('.header-title').text();
 
                 loadFeed(secondFeedId, function() {
                     //Stores the value of the name property of the second feed
-                    secondFeedName=allFeeds[secondFeedId].name;
+                    secondFeedName = allFeeds[secondFeedId].name;
 
                     done();
 
@@ -222,8 +221,8 @@ $(function() {
             });
         });
 
-       /* afterAll method restores loadFeed function to the default.
-        */
+        /* afterAll method restores loadFeed function to the default.
+         */
         afterAll(function(callback){
 
            loadFeed(firstFeedId, function() {
@@ -233,15 +232,15 @@ $(function() {
            });
         });
 
-      /* This test checks that the values of the first feed and the
-       * second feed are not equal.
-       */
+        /* This test checks that the values of the first feed and the
+         * second feed are not equal.
+         */
         it('produces new content', function (done) {
 
             //Stores the header-title of the second feed
-            secondFeedTitle=$('.header-title').text();
+            secondFeedTitle = $('.header-title').text();
             //Stores the name property of the first feed
-            firstFeedName=allFeeds[firstFeedId].name;
+            firstFeedName = allFeeds[firstFeedId].name;
 
             //Checks the differences
             expect(firstFeedName).toMatch('Udacity Blog');
@@ -253,13 +252,12 @@ $(function() {
 
         });
 
-      /* This test checks that the values of the loadFeed function are
-       * restored to the default.
-       */
-
+        /* This test checks that the values of the loadFeed function are
+         * restored to the default.
+         */
         it('restores the loadFeed to the default', function (callback) {
 
-            defaultFeedName= allFeeds[firstFeedId].name;
+            defaultFeedName = allFeeds[firstFeedId].name;
             expect(defaultFeedName).toMatch('Udacity Blog');
 
             callback();
